@@ -1,0 +1,3 @@
+rootProject.name = 'springath'
+
+include 'springath-service', 'springath-ui'
