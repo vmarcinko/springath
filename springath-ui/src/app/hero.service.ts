@@ -4,6 +4,7 @@ import {Observable, of} from 'rxjs';
 import {MessageService} from "./message.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, tap} from 'rxjs/operators';
+import { environment } from './../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -13,7 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class HeroService {
-  private heroesUrl = 'api/heroes';  // URL to web api
+  private heroesUrl = environment.apiUrl + '/heroes';  // URL to web api
 
   constructor(private http: HttpClient, private messageService: MessageService) {
   }
