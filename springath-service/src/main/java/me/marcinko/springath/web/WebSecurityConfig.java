@@ -1,4 +1,4 @@
-package me.marcinko.springath;
+package me.marcinko.springath.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +11,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				.csrf().disable()
 				.authorizeRequests()
-//				.anyRequest().authenticated()
+				.antMatchers("/web/**").permitAll()
+				.antMatchers("/api/**").permitAll()
 				.anyRequest().permitAll()
 				.and()
 				.httpBasic()

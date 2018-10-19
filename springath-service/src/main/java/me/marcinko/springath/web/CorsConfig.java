@@ -1,4 +1,4 @@
-package me.marcinko.springath;
+package me.marcinko.springath.web;
 
 import java.util.Arrays;
 

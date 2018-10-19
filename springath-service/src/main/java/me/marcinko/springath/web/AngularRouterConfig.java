@@ -1,4 +1,4 @@
-package me.marcinko.springath;
+package me.marcinko.springath.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
