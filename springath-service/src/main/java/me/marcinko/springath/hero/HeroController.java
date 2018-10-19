@@ -1,5 +1,6 @@
 package me.marcinko.springath.hero;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -33,11 +34,11 @@ public class HeroController implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		heroRepository.save(new Hero("Hardy"));
-		heroRepository.save(new Hero("Tom"));
-		heroRepository.save(new Hero("William H. Bony"));
-		heroRepository.save(new Hero("Mama Mia"));
-		heroRepository.save(new Hero("Napoleon"));
+		heroRepository.save(new Hero("Hardy", LocalDate.of(1978, 11, 2)));
+		heroRepository.save(new Hero("Tom", LocalDate.of(1988, 11, 2)));
+		heroRepository.save(new Hero("William H. Bony", LocalDate.of(1966, 4, 2)));
+		heroRepository.save(new Hero("Mama Mia", LocalDate.of(1970, 11, 2)));
+		heroRepository.save(new Hero("Napoleon", LocalDate.of(1978, 5, 2)));
 	}
 
 	@PostMapping(consumes = "application/json", produces = "application/json")
