@@ -1,7 +1,7 @@
-import {NgbDate} from "@ng-bootstrap/ng-bootstrap";
+import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 
 export class Hero {
-  id: number;
-  name: string;
-  birthday: NgbDate;
+	id: number;
+	name: string;
+	birthday: NgbDateStruct;
 }

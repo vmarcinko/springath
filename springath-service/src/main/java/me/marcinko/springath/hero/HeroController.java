@@ -70,8 +70,7 @@ public class HeroController implements InitializingBean {
 	@PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void updateHero(@PathVariable Long id, @RequestBody Hero hero) {
-		// Retrieve hero first. This is the only way to ensure hero already exists prior
-		// to saving.
+		// Retrieve hero first. This is the only way to ensure hero already exists prior to saving.
 		final Hero currentHero = heroRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Hero not found for id: " + id));
 		LOG.info("updateHero: modified name from {} to {}", currentHero.getName(), hero.getName());
