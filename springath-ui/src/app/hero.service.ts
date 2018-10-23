@@ -5,6 +5,8 @@ import {MessageService} from "./message.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, map, tap} from 'rxjs/operators';
 import {environment} from './../environments/environment';
+import * as moment from 'moment';
+import {NgbDate} from "@ng-bootstrap/ng-bootstrap";
 
 const httpOptions = {
 	headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -23,7 +25,7 @@ export class HeroService {
 		return this.http
 			.get<Hero[]>(this.heroesUrl)
 			.pipe(
-				map(value => value.map(HeroService.convertHeroBirthday)),
+				map(value => value.map(HeroService.convertApiHeroToModel)),
 				tap(heroes => this.log(`Fetched ${heroes.length} heroes`)),
 				catchError(this.handleError('getHeroes', [])));
 	}
@@ -31,7 +33,7 @@ export class HeroService {
 	getHero(id: number): Observable<Hero> {
 		const url = `${this.heroesUrl}/${id}`;
 		return this.http.get<Hero>(url).pipe(
-			map(HeroService.convertHeroBirthday),
+			map(HeroService.convertApiHeroToModel),
 			tap(value => this.log(`fetched hero ${JSON.stringify(value)}`)),
 			catchError(this.handleError<Hero>(`getHero id=${id}`))
 		);
@@ -94,14 +96,15 @@ export class HeroService {
 			return of([]);
 		}
 		return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
-			map(value => value.map(HeroService.convertHeroBirthday)),
+			map(value => value.map(HeroService.convertApiHeroToModel)),
 			tap(_ => this.log(`found heroes matching "${term}"`)),
 			catchError(this.handleError<Hero[]>('searchHeroes', []))
 		);
 	}
 
-	private static convertHeroBirthday(hero: Hero): Hero {
-		hero.birthday = {year: 1889, month: 7, day: 14};
+	private static convertApiHeroToModel(hero: Hero): Hero {
+		let birthdayDate = moment(hero.birthday, 'YYYY-MM-DD').toDate();
+		hero.birthday = new NgbDate(birthdayDate.getFullYear(), birthdayDate.getMonth(), birthdayDate.getDay());
 		return hero;
 	}
 }
