@@ -9,12 +9,27 @@
   </li>
 </ul>
 
+<h2>Add new hero:</h2>
+
 <div>
-  <label>Hero name:
-    <input #heroName />
+  <label>Name:
+    <input [(ngModel)]="newHero.name" />
   </label>
-  <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(heroName.value); heroName.value=''">
-    Add
-  </button>
 </div>
+<div>
+	<label>Birthday:</label>
+	<div class="form-group">
+		<div class="input-group">
+			<input type="text" ngbDatepicker [(ngModel)]="newHero.birthday" #d="ngbDatepicker" class="form-control"
+					placeholder="yyyy-mm-dd"/>
+			<div class="input-group-append">
+				<button (click)="d.toggle()" type="button" class="btn btn-outlin e-secondary calendar">
+					Calendar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<button (click)="add()">
+  Add
+</button>

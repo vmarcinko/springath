@@ -4,7 +4,7 @@ import {Observable, of} from 'rxjs';
 import {MessageService} from "./message.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, map, tap} from 'rxjs/operators';
-import {environment} from './../environments/environment';
+import {environment} from '../environments/environment';
 import * as moment from 'moment';
 import {NgbDate} from "@ng-bootstrap/ng-bootstrap";
 
@@ -73,7 +73,10 @@ export class HeroService {
 	}
 
 	addHero(hero: Hero): Observable<Hero> {
-		return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
+		let requestBody = HeroService.convertModelHeroToApi(HeroService.deepCopy(hero));
+
+		return this.http.post<Hero>(this.heroesUrl, requestBody, httpOptions).pipe(
+			map(HeroService.convertApiHeroToModel),
 			tap((hero: Hero) => this.log(`added hero w/ id=${hero.id}`)),
 			catchError(this.handleError<Hero>('addHero'))
 		);
@@ -102,9 +105,22 @@ export class HeroService {
 		);
 	}
 
+	private static convertModelHeroToApi(hero: any): any {
+		if (!hero) {
+			return null;
+		}
+		let date = new Date(hero.birthday.year, hero.birthday.month, hero.birthday.day, 0, 0, 0, 0);
+		hero.birthday = moment(date).format("YYYY-MM-DD");
+		return hero;
+	}
+
 	private static convertApiHeroToModel(hero: Hero): Hero {
 		let birthdayDate = moment(hero.birthday, 'YYYY-MM-DD').toDate();
 		hero.birthday = new NgbDate(birthdayDate.getFullYear(), birthdayDate.getMonth(), birthdayDate.getDay());
 		return hero;
+	}
+
+	private static deepCopy<T>(obj: T): T {
+		return JSON.parse(JSON.stringify(obj));
 	}
 }
