@@ -7,6 +7,7 @@ import {catchError, map, tap} from 'rxjs/operators';
 import {environment} from '../environments/environment';
 import * as moment from 'moment';
 import {NgbDate} from "@ng-bootstrap/ng-bootstrap";
+import {log} from "util";
 
 const httpOptions = {
 	headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -109,7 +110,7 @@ export class HeroService {
 		if (!hero) {
 			return null;
 		}
-		let date = new Date(hero.birthday.year, hero.birthday.month, hero.birthday.day, 0, 0, 0, 0);
+		let date = new Date(hero.birthday.year, hero.birthday.month - 1, hero.birthday.day, 0, 0, 0, 0);
 		hero.birthday = moment(date).format("YYYY-MM-DD");
 		return hero;
 	}

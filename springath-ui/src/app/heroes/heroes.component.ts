@@ -10,10 +10,9 @@ import {log} from "util";
 })
 export class HeroesComponent implements OnInit {
 	heroes: Hero[];
-	newHero: Hero = {id: null, name: '', birthday: null};
+	newHero: any = {name: ''};
 
 	constructor(private heroService: HeroService) {
-		log("Instancirana klasa: " + this.constructor.name);
 	}
 
 	ngOnInit() {
@@ -25,7 +24,7 @@ export class HeroesComponent implements OnInit {
 			.subscribe(hero => {
 				this.heroes.push(hero);
 			});
-		this.newHero = {id: null, name: '', birthday: null};
+		this.newHero = {name: ''};
 	}
 
 	delete(hero: Hero): void {
