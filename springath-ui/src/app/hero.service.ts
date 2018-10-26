@@ -40,7 +40,9 @@ export class HeroService {
 
 	updateHero(hero: Hero): Observable<any> {
 		const url = `${this.heroesUrl}/${hero.id}`;
-		return this.http.put(url, hero, httpOptions).pipe(
+		let requestBody = HeroService.convertModelHeroToApi(hero);
+
+		return this.http.put(url, requestBody, httpOptions).pipe(
 			tap(_ => this.log(`updated hero id=${hero.id}`)),
 			catchError(this.handleError<any>('updateHero'))
 		);
@@ -72,7 +74,7 @@ export class HeroService {
 	}
 
 	addHero(hero: Hero): Observable<Hero> {
-		let requestBody = HeroService.convertModelHeroToApi(HeroService.deepCopy(hero));
+		let requestBody = HeroService.convertModelHeroToApi(hero);
 
 		return this.http.post<Hero>(this.heroesUrl, requestBody, httpOptions).pipe(
 			map(HeroService.convertApiHeroToModel),
@@ -108,8 +110,9 @@ export class HeroService {
 		if (!hero) {
 			return null;
 		}
-		hero.birthday = moment(hero.birthday).format("YYYY-MM-DD");
-		return hero;
+		let copy = HeroService.deepCopy(hero);
+		copy.birthday = moment(copy.birthday).format("YYYY-MM-DD");
+		return copy;
 	}
 
 	private static convertApiHeroToModel(hero: Hero): Hero {
