@@ -6,8 +6,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, map, tap} from 'rxjs/operators';
 import {environment} from '../environments/environment';
 import * as moment from 'moment';
-import {NgbDate} from "@ng-bootstrap/ng-bootstrap";
-import {log} from "util";
 
 const httpOptions = {
 	headers: new HttpHeaders({'Content-Type': 'application/json'})

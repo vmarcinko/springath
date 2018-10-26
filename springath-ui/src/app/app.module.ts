@@ -11,7 +11,7 @@ import {MessagesComponent} from './messages/messages.component';
 import {AppRoutingModule} from './/app-routing.module';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {HeroSearchComponent} from './hero-search/hero-search.component';
-import {AuthInterceptor} from "./auth-interceptor";
+import {AuthInterceptor} from "./auth/auth-interceptor";
 
 @NgModule({
 	declarations: [
