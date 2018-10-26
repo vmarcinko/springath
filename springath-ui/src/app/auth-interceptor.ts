@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {log} from "util";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -13,11 +12,10 @@ export class AuthInterceptor implements HttpInterceptor {
 		const password = "admin";
 		const basicAuthToken = 'Basic ' + btoa(username + ":" + password);
 
-
 		// Clone the request and replace the original headers with
 		// cloned headers, updated with the authorization.
 		// Clone the request and set the new header in one step.
-		let newHeaders = req.headers.set('Authorization', basicAuthToken);
+		const newHeaders = req.headers.set('Authorization', basicAuthToken);
 		const authReq = req.clone({headers: newHeaders});
 
 		// send cloned request with header to the next handler.

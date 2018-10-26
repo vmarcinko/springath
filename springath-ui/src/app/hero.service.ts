@@ -110,14 +110,12 @@ export class HeroService {
 		if (!hero) {
 			return null;
 		}
-		let date = new Date(hero.birthday.year, hero.birthday.month - 1, hero.birthday.day, 0, 0, 0, 0);
-		hero.birthday = moment(date).format("YYYY-MM-DD");
+		hero.birthday = moment(hero.birthday).format("YYYY-MM-DD");
 		return hero;
 	}
 
 	private static convertApiHeroToModel(hero: Hero): Hero {
-		let birthdayDate = moment(hero.birthday, 'YYYY-MM-DD').toDate();
-		hero.birthday = new NgbDate(birthdayDate.getFullYear(), birthdayDate.getMonth(), birthdayDate.getDay());
+		hero.birthday = moment(hero.birthday, 'YYYY-MM-DD').toDate();
 		return hero;
 	}
 
